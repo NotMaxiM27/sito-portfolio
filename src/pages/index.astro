@@ -1,11 +1,48 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import { ClientRouter } from 'astro:transitions';
+import ShaderCanvas from '../components/3d/ShaderScene';
+import CrtOverlay from '../components/ui/CrtOverlay';
+import Navbar from '../components/ui/Navbar';
+import SkillsMatrix from '../components/ui/SkillsMatrix.astro';
+import '../styles/global.css';
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<html lang="it">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Portfolio | Graphics Eng</title>
+    <ClientRouter />
+  </head>
+  <body class="relative min-h-screen text-white overflow-x-hidden bg-black">
+    
+    <Navbar client:load transition:persist="navbar" />
+    <ShaderCanvas client:visible />
+
+    <main class="relative z-10 flex h-screen items-center justify-center flex-col text-center pointer-events-none">
+      <p class="text-cyan-400 font-mono mb-2 animate-pulse uppercase tracking-[0.3em]">
+        System Ready_
+      </p>
+      <h1 class="text-7xl font-black text-glitch tracking-tighter italic">
+        PORTFOLIO_V1
+      </h1>
+      <div class="mt-8 h-1 w-24 bg-white/20 relative overflow-hidden">
+         <div class="absolute inset-0 bg-cyan-500 animate-[loading_2s_infinite]"></div>
+      </div>
+    </main>
+
+    <section class="relative z-10 px-4 pb-24">
+      <SkillsMatrix />
+    </section>
+
+    <CrtOverlay />
+
+    <style>
+      @keyframes loading {
+        0% { transform: translateX(-100%); }
+        100% { transform: translateX(100%); }
+      }
+    </style>
+  </body>
+</html>

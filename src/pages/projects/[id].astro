@@ -1,0 +1,152 @@
+---
+import { getCollection, render } from 'astro:content';
+import { ClientRouter } from 'astro:transitions';
+import Navbar from '../../components/ui/Navbar';
+import CrtOverlay from '../../components/ui/CrtOverlay';
+import ImageCarousel from '../../components/ui/ImageCarousel';
+import '../../styles/global.css';
+
+export async function getStaticPaths() {
+  const allProjects = await getCollection('projects');
+  return allProjects.map(project => ({
+    params: { id: project.data.id.toString() },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+
+const tagColors: Record<string, string> = {
+  'WebGL': '#ff0055',
+  'C++': '#0088ff',
+  'GLSL': '#00ffaa',
+  'Three.js': '#ffaa00',
+  'Rust': '#ff5500',
+  'Math': '#aa00ff',
+};
+const getTagColor = (tag: string) => tagColors[tag] || '#00ffff';
+---
+
+<html lang="it">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{project.data.title} | Portfolio</title>
+    <ClientRouter />
+  </head>
+  <body class="relative min-h-screen text-white bg-[#050505] overflow-x-hidden">
+    
+    <Navbar client:load transition:persist="navbar" />
+
+    <main class="relative flex flex-col items-center pt-32 pb-20 px-4 max-w-4xl mx-auto">
+      
+      {/* HEADER SECTION */}
+      <div class="w-full flex justify-between items-end mb-4">
+        <a 
+          href="/projects" 
+          class="text-cyan-400 hover:text-cyan-300 pixel-text text-sm transition-colors uppercase animate-pulse"
+        >
+          &lt; [BACK_TO_ARCHIVE]
+        </a>
+        <div class="flex gap-2">
+          {project.data.tags.map(tag => {
+            const color = getTagColor(tag);
+            return (
+              <span 
+                class="text-xs px-2 py-1 uppercase tracking-widest border border-white/10 font-bold"
+                style={`color: ${color}; background-color: ${color}1A`}
+              >
+                {tag}
+              </span>
+            )
+          })}
+        </div>
+      </div>
+
+      {/* TITLE VIEW TRANSITION AND YEAR */}
+      <div class="w-full text-left mb-12 border-b-2 border-white/10 pb-6">
+        <h1 
+          class="text-4xl md:text-5xl font-black mb-2 pixel-text text-white uppercase"
+          style={`view-transition-name: title-${project.data.id}`}
+        >
+          {project.data.title}
+        </h1>
+        {project.data.year && (
+          <span class="text-cyan-400 font-mono text-lg font-bold">
+            > [ {project.data.year} ]
+          </span>
+        )}
+      </div>
+
+      {/* ADDITIONAL MEDIA: VIDEO */}
+      {project.data.video && (
+        <div class="w-full mb-10 border-2 border-white/10 relative bg-[#111]">
+          <div class="bg-[#222] text-xs font-mono text-cyan-400 px-2 py-1 border-b border-white/10">
+            > SYSTEM.PLAY_VIDEO
+          </div>
+          <video 
+            class="w-full h-auto z-10 relative block"
+            autoplay 
+            loop 
+            muted 
+            playsinline
+            controls
+          >
+            <source src={project.data.video} type="video/mp4" />
+            Il tuo browser non supporta la riproduzione di video.
+          </video>
+        </div>
+      )}
+
+      {/* ADDITIONAL MEDIA: GALLERY */}
+      {project.data.gallery && project.data.gallery.length > 0 && (
+        <ImageCarousel client:load items={project.data.gallery} />
+      )}
+
+      {/* ADDITIONAL MEDIA: MIRO */}
+      {project.data.miro && (
+        <div class="w-full h-[500px] mb-10 border-2 border-cyan-500/30 relative z-[60] bg-[#111]">
+          <div class="bg-[#222] text-xs font-mono text-cyan-400 px-2 py-1 border-b border-white/10">
+            > SYSTEM.MIRO_BOARD_LINK
+          </div>
+          <iframe 
+            class="absolute inset-0 top-[28px] w-full h-[calc(100%-28px)] border-0 z-10 bg-white"
+            src={project.data.miro} 
+            allowfullscreen 
+            allow="fullscreen; clipboard-read; clipboard-write"
+          ></iframe>
+        </div>
+      )}
+
+      {/* MARKDOWN CONTENT */}
+      <article class="prose prose-invert prose-p:font-mono prose-headings:pixel-text prose-a:text-cyan-400 hover:prose-a:text-cyan-300 w-full max-w-none prose-pre:border prose-pre:border-white/20 prose-pre:bg-[#0a0a0a]">
+        <Content />
+      </article>
+      
+    </main>
+
+    <CrtOverlay />
+
+    <style is:global>
+      /* Stili extra per il contenuto Markdown */
+      article blockquote {
+        border-left: 4px solid #00ffff;
+        background: rgba(0, 255, 255, 0.05);
+        padding: 1rem;
+        font-style: italic;
+        color: #e5e7eb;
+      }
+      article code {
+        color: #00ffaa;
+        background: rgba(0, 255, 170, 0.1);
+        padding: 0.2rem 0.4rem;
+        border-radius: 2px;
+      }
+      article pre {
+        border-radius: 0;
+        box-shadow: 0 0 10px rgba(0,0,0,0.5);
+      }
+    </style>
+  </body>
+</html>

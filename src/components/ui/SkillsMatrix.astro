@@ -1,0 +1,53 @@
+---
+const skills = [
+  { name: 'WebGL / OpenGL', level: 9 },
+  { name: 'GLSL / HLSL', level: 9 },
+  { name: 'Three.js / R3F', level: 10 },
+  { name: 'C++ / C', level: 8 },
+  { name: 'Rust', level: 7 },
+  { name: 'React / Astro', level: 8 },
+];
+---
+
+<div class="w-full max-w-2xl mx-auto my-16 border-2 border-white/10 p-6 md:p-10 bg-[#050505] relative overflow-hidden group">
+  <div class="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0)_50%,rgba(0,0,0,0.25)_50%)] bg-[length:100%_4px] pointer-events-none z-10"></div>
+  
+  <h2 class="text-3xl md:text-4xl font-black mb-10 pixel-text text-glitch text-center uppercase relative z-20">
+    SYSTEM_SKILLS
+  </h2>
+  
+  <div class="flex flex-col gap-6 relative z-20">
+    {skills.map((skill, index) => (
+      <div class="flex flex-col md:flex-row md:items-center justify-between">
+        <span class="font-mono text-sm md:text-base uppercase tracking-widest text-gray-400 mb-2 md:mb-0 w-48 group-hover:text-cyan-400 transition-colors">
+          > {skill.name}
+        </span>
+        <div class="flex-1 flex gap-1 h-5 ml-0 md:ml-4">
+          {Array.from({ length: 10 }).map((_, i) => (
+            <div 
+              class={`h-full flex-1 border border-black/50 ${
+                i < skill.level 
+                  ? 'bg-cyan-500 shadow-[0_0_5px_rgba(6,182,212,0.8)]' 
+                  : 'bg-[#111]'
+              } `}
+              style={`animation: loadBar 0.5s ease-out forwards; animation-delay: ${(index * 0.1) + (i * 0.05)}s; opacity: 0;`}
+            ></div>
+          ))}
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <style>
+    @keyframes loadBar {
+      0% {
+        opacity: 0;
+        transform: scaleY(0);
+      }
+      100% {
+        opacity: 1;
+        transform: scaleY(1);
+      }
+    }
+  </style>
+</div>
