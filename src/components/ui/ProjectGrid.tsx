@@ -13,11 +13,14 @@ export interface ProjectGridProps {
 }
 
 const tagColors: Record<string, string> = {
-  'WebGL': '#ff0055',
-  'C++': '#0088ff',
-  'GLSL': '#00ffaa',
-  'Three.js': '#ffaa00',
-  'Rust': '#ff5500',
+  'C++': '#ff0055',
+  'C#': '#ff0055',
+  'Python': '#ff0055',
+  'Unreal Engine': '#0088ff',
+  'Unity': '#0088ff',
+  'OpenGL': '#00ffaa',
+  'University': '#ffaa00',
+  'Blueprints': '#ff5500',
   'Math': '#aa00ff',
 };
 
@@ -39,19 +42,19 @@ export default function ProjectGrid({ progetti }: ProjectGridProps) {
   };
 
   const progettiFiltrati = tagAttivi.length === 0
-  ? progetti 
-  : progetti.filter(p => tagAttivi.every(t => p.tags.includes(t)));
+    ? progetti
+    : progetti.filter(p => tagAttivi.every(t => p.tags.includes(t)));
 
   return (
     <div className="w-full max-w-6xl mx-auto p-4">
-      
+
       {/* Bottoni del Filtro */}
       <div className="flex flex-wrap justify-center gap-4 mb-12">
         {tuttiITags.map((tag) => {
           const isActive = tagAttivi.includes(tag);
           const isHovered = hoveredTag === tag;
           const color = getTagColor(tag);
-          
+
           return (
             <button
               key={tag}
@@ -60,7 +63,7 @@ export default function ProjectGrid({ progetti }: ProjectGridProps) {
               onMouseLeave={() => setHoveredTag(null)}
               // Tolta la classe arcade-cascade, teniamo solo la base
               className="px-4 py-2 pixel-text text-sm transition-all border-2"
-              style={{ 
+              style={{
                 borderRadius: '0',
                 // Gestione logica dei colori in base allo stato (Attivo > Hover > Default)
                 borderColor: isActive ? color : (isHovered ? color : 'rgba(255,255,255,0.2)'),
@@ -75,7 +78,7 @@ export default function ProjectGrid({ progetti }: ProjectGridProps) {
             </button>
           );
         })}
-        
+
         {tagAttivi.length > 0 && (
           <button
             onClick={() => setTagAttivi([])}
@@ -91,27 +94,27 @@ export default function ProjectGrid({ progetti }: ProjectGridProps) {
         <AnimatePresence>
           {progettiFiltrati.map((progetto) => (
             <motion.a
-              href={`/projects/${progetto.id}`} 
+              href={`/projects/${progetto.id}`}
               key={progetto.id}
-              layout 
+              layout
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.8 }}
               className="group block relative overflow-hidden border-2 border-white/10 bg-[#0a0a0a] hover:border-cyan-400 transition-colors"
             >
               <div className="h-48 bg-[#111] relative" style={{ viewTransitionName: `img-${progetto.id}` }}>
-                 {progetto.image ? (
-                   <img src={progetto.image} alt={progetto.title} className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" />
-                 ) : (
-                   <div className="absolute inset-0 flex items-center justify-center text-gray-600 font-mono text-xs">
-                      [NO_SIGNAL_IMG]
-                   </div>
-                 )}
-                 <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0)_50%,rgba(0,0,0,0.25)_50%)] bg-[length:100%_4px] pointer-events-none"></div>
+                {progetto.image ? (
+                  <img src={progetto.image} alt={progetto.title} className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" />
+                ) : (
+                  <div className="absolute inset-0 flex items-center justify-center text-gray-600 font-mono text-xs">
+                    [NO_SIGNAL_IMG]
+                  </div>
+                )}
+                <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0)_50%,rgba(0,0,0,0.25)_50%)] bg-[length:100%_4px] pointer-events-none"></div>
               </div>
 
               <div className="p-4 relative z-10">
-                <h3 
+                <h3
                   className="text-xl font-bold mb-3 pixel-text text-white group-hover:text-cyan-400"
                   style={{ viewTransitionName: `title-${progetto.id}` }}
                 >
@@ -121,8 +124,8 @@ export default function ProjectGrid({ progetti }: ProjectGridProps) {
                   {progetto.tags.map(tag => {
                     const color = getTagColor(tag);
                     return (
-                      <span 
-                        key={tag} 
+                      <span
+                        key={tag}
                         className="text-xs px-2 py-1 uppercase tracking-widest border border-white/10 font-bold"
                         style={{ color: color, backgroundColor: `${color}1A` }}
                       >

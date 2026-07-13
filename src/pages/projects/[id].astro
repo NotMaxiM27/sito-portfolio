@@ -1,7 +1,6 @@
 ---
 import { getCollection, render } from 'astro:content';
 import { ClientRouter } from 'astro:transitions';
-import Navbar from '../../components/ui/Navbar';
 import CrtOverlay from '../../components/ui/CrtOverlay';
 import ImageCarousel from '../../components/ui/ImageCarousel';
 import '../../styles/global.css';
@@ -37,14 +36,14 @@ const getTagColor = (tag: string) => tagColors[tag] || '#00ffff';
   </head>
   <body class="relative min-h-screen text-white bg-[#050505] overflow-x-hidden">
     
-    <Navbar client:load transition:persist="navbar" />
+    
 
     <main class="relative flex flex-col items-center pt-32 pb-20 px-4 max-w-4xl mx-auto">
       
       {/* HEADER SECTION */}
       <div class="w-full flex justify-between items-end mb-4">
         <a 
-          href="/projects" 
+          href="/" 
           class="text-cyan-400 hover:text-cyan-300 pixel-text text-sm transition-colors uppercase animate-pulse"
         >
           &lt; [BACK_TO_ARCHIVE]
@@ -65,17 +64,30 @@ const getTagColor = (tag: string) => tagColors[tag] || '#00ffff';
       </div>
 
       {/* TITLE VIEW TRANSITION AND YEAR */}
-      <div class="w-full text-left mb-12 border-b-2 border-white/10 pb-6">
-        <h1 
-          class="text-4xl md:text-5xl font-black mb-2 pixel-text text-white uppercase"
-          style={`view-transition-name: title-${project.data.id}`}
-        >
-          {project.data.title}
-        </h1>
-        {project.data.year && (
-          <span class="text-cyan-400 font-mono text-lg font-bold">
-            > [ {project.data.year} ]
-          </span>
+      <div class="w-full text-left mb-12 border-b-2 border-white/10 pb-6 flex flex-col md:flex-row md:justify-between md:items-end gap-4">
+        <div>
+          <h1 
+            class="text-4xl md:text-5xl font-black mb-2 pixel-text text-white uppercase"
+            style={`view-transition-name: title-${project.data.id}`}
+          >
+            {project.data.title}
+          </h1>
+          {project.data.year && (
+            <span class="text-cyan-400 font-mono text-lg font-bold">
+              > [ {project.data.year} ]
+            </span>
+          )}
+        </div>
+
+        {project.data.downloadUrl && (
+          <a 
+            href={project.data.downloadUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-block bg-cyan-500/10 hover:bg-cyan-500/30 border border-cyan-500 text-cyan-400 px-6 py-3 font-mono font-bold uppercase tracking-widest text-sm transition-colors text-center shadow-[0_0_15px_rgba(0,255,255,0.2)] hover:shadow-[0_0_25px_rgba(0,255,255,0.4)]"
+          >
+            > SYSTEM.DOWNLOAD
+          </a>
         )}
       </div>
 
@@ -146,6 +158,14 @@ const getTagColor = (tag: string) => tagColors[tag] || '#00ffff';
       article pre {
         border-radius: 0;
         box-shadow: 0 0 10px rgba(0,0,0,0.5);
+      }
+      article video {
+        width: 100%;
+        height: auto;
+        border: 2px solid rgba(255, 255, 255, 0.1);
+        background-color: #111;
+        margin-top: 1.5rem;
+        margin-bottom: 1.5rem;
       }
     </style>
   </body>

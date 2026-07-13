@@ -20,6 +20,7 @@ const projectsCollection = defineCollection({
     ).optional(),
     video: z.string().optional(),
     miro: z.string().optional(),
+    downloadUrl: z.string().optional(),
     order: z.number().optional()
   })
 });

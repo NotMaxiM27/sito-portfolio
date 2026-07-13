@@ -1,5 +1,5 @@
 ---
-id: 2
+id: 4
 title: "Museum Visualizer"
 tags: ["C++", "OpenGL", "University"]
 year: 2026
@@ -45,7 +45,7 @@ gallery:
       description: "Visual comparison of of the bunny model and its different Level Of Detail versions using Quadric Error Metrics. LOD3"
     - src: "/images/museum_visualizer/bunny_LOD4_QEM.png"
       description: "Visual comparison of of the bunny model and its different Level Of Detail versions using Quadric Error Metrics. LOD4"
-order: 2
+order: 4
 ---
 
 ## Description

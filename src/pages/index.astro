@@ -1,48 +1,51 @@
 ---
 import { ClientRouter } from 'astro:transitions';
-import ShaderCanvas from '../components/3d/ShaderScene';
+import { getCollection } from 'astro:content';
 import CrtOverlay from '../components/ui/CrtOverlay';
-import Navbar from '../components/ui/Navbar';
-import SkillsMatrix from '../components/ui/SkillsMatrix.astro';
+import ProjectGrid from '../components/ui/ProjectGrid';
 import '../styles/global.css';
+
+const allProjects = await getCollection('projects');
+const progettiData = allProjects
+  .sort((a, b) => (a.data.order || 99) - (b.data.order || 99))
+  .map(p => ({
+    id: p.data.id,
+    title: p.data.title,
+    tags: p.data.tags,
+    image: p.data.image,
+  }));
 ---
 
 <html lang="it">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width" />
-    <title>Portfolio | Graphics Eng</title>
+    <title>Portfolio | Cyberpunk Archive</title>
     <ClientRouter />
   </head>
-  <body class="relative min-h-screen text-white overflow-x-hidden bg-black">
+  <body class="relative min-h-screen text-white bg-black overflow-x-hidden">
     
-    <Navbar client:load transition:persist="navbar" />
-    <ShaderCanvas client:visible />
+    {/* Video Background */}
+    {/* Inserisci qui il tuo video: salva il file in public/videos/background.mp4 o cambia il percorso */}
+    <div class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
+      <video
+        autoplay
+        loop
+        muted
+        playsinline
+        class="absolute top-1/2 left-1/2 min-w-full min-h-full w-auto h-auto -translate-x-1/2 -translate-y-1/2 object-cover opacity-30 mix-blend-screen"
+      >
+        <source src="/videos/K4b00m Overview.mp4" type="video/mp4" />
+      </video>
+    </div>
 
-    <main class="relative z-10 flex h-screen items-center justify-center flex-col text-center pointer-events-none">
-      <p class="text-cyan-400 font-mono mb-2 animate-pulse uppercase tracking-[0.3em]">
-        System Ready_
-      </p>
-      <h1 class="text-7xl font-black text-glitch tracking-tighter italic">
-        PORTFOLIO_V1
-      </h1>
-      <div class="mt-8 h-1 w-24 bg-white/20 relative overflow-hidden">
-         <div class="absolute inset-0 bg-cyan-500 animate-[loading_2s_infinite]"></div>
-      </div>
+    {/* Un gradiente per sfumare il video se serve */}
+    <div class="fixed inset-0 z-0 bg-gradient-to-b from-transparent to-black pointer-events-none opacity-80"></div>
+
+    <main class="relative z-10 flex flex-col items-center pt-20 pb-20">
+      <ProjectGrid client:load progetti={progettiData} />
     </main>
 
-    <section class="relative z-10 px-4 pb-24">
-      <SkillsMatrix />
-    </section>
-
     <CrtOverlay />
-
-    <style>
-      @keyframes loading {
-        0% { transform: translateX(-100%); }
-        100% { transform: translateX(100%); }
-      }
-    </style>
   </body>
 </html>

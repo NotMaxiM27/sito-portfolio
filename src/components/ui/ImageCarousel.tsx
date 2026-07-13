@@ -43,13 +43,13 @@ export default function ImageCarousel({ items }: { items: GalleryItemType[] }) {
           onClick={prev} 
           className="absolute left-0 top-1/2 -translate-y-1/2 p-4 opacity-50 hover:opacity-100 hover:bg-black/50 transition-all h-full flex items-center justify-center"
         >
-          <img src="/images/previous_white.png" alt="Previous" className="w-8 h-8 object-contain drop-shadow-md" />
+          <img src="/images/previous_white.png" alt="Previous" className="object-contain drop-shadow-md" style={{ width: '32px', height: '32px' }} />
         </button>
         <button 
           onClick={next} 
           className="absolute right-0 top-1/2 -translate-y-1/2 p-4 opacity-50 hover:opacity-100 hover:bg-black/50 transition-all h-full flex items-center justify-center"
         >
-          <img src="/images/next_white.png" alt="Next" className="w-8 h-8 object-contain drop-shadow-md" />
+          <img src="/images/next_white.png" alt="Next" className="object-contain drop-shadow-md" style={{ width: '32px', height: '32px' }} />
         </button>
       </div>
 
