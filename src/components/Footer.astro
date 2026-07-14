@@ -1,0 +1,44 @@
+---
+// Footer.astro
+---
+
+<footer class="w-full py-4 mt-auto border-t border-white/10 bg-black/50 backdrop-blur-md sticky bottom-0 z-50">
+  <div class="max-w-4xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4">
+    <div class="text-sm font-mono text-gray-400">
+      <span class="text-cyan-400">&gt;</span> SYSTEM.STATUS [ONLINE]
+    </div>
+    
+    <div class="flex gap-6">
+      <a 
+        href="https://www.linkedin.com/in/samuel-uscidda/" 
+        target="_blank" 
+        rel="noopener noreferrer"
+        class="text-gray-400 hover:text-cyan-400 font-mono text-sm uppercase transition-colors flex items-center gap-2"
+      >
+        <span>[</span> LinkedIn <span>]</span>
+      </a>
+      <a 
+        href="https://github.com/NotMaxiM27" 
+        target="_blank" 
+        rel="noopener noreferrer"
+        class="text-gray-400 hover:text-magenta-400 font-mono text-sm uppercase transition-colors flex items-center gap-2"
+        style="--tw-hover-text-opacity: 1; hover:color: #f0f;"
+      >
+        <span class="hover:text-[#f0f] transition-colors">[ GitHub ]</span>
+      </a>
+      <a 
+        href="mailto:samuel.uscidda@outlook.it" 
+        class="text-gray-400 hover:text-yellow-400 font-mono text-sm uppercase transition-colors flex items-center gap-2"
+      >
+        <span>[</span> Email <span>]</span>
+      </a>
+    </div>
+  </div>
+</footer>
+
+<style>
+  /* Fix custom hover colors in case tailwind classes don't work */
+  .hover\:text-\[\#f0f\]:hover {
+    color: #f0f;
+  }
+</style>

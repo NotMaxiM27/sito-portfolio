@@ -23,13 +23,13 @@ const resolvePath = (path: string) => {
 
 const tagColors: Record<string, string> = {
   'C++': '#ff0055',
-  'C#': '#ff0055',
-  'Python': '#ff0055',
+  'C#': '#fff700ff',
+  'Python': '#ff3c00ff',
   'Unreal Engine': '#0088ff',
-  'Unity': '#0088ff',
+  'Unity': '#00ff04ff',
   'OpenGL': '#00ffaa',
   'University': '#ffaa00',
-  'Blueprints': '#ff5500',
+  'Blueprints': '#ff00e6ff',
   'Math': '#aa00ff',
 };
 
@@ -113,7 +113,13 @@ export default function ProjectGrid({ progetti }: ProjectGridProps) {
             >
               <div className="h-48 bg-[#111] relative" style={{ viewTransitionName: `img-${progetto.id}` }}>
                 {progetto.image ? (
-                  <img src={resolvePath(progetto.image)} alt={progetto.title} className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" />
+                  <img 
+                    src={resolvePath(progetto.image)} 
+                    alt={progetto.title} 
+                    loading="lazy"
+                    decoding="async"
+                    className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" 
+                  />
                 ) : (
                   <div className="absolute inset-0 flex items-center justify-center text-gray-600 font-mono text-xs">
                     [NO_SIGNAL_IMG]

@@ -3,6 +3,7 @@ import { getCollection, render } from 'astro:content';
 import { ClientRouter } from 'astro:transitions';
 import CrtOverlay from '../../components/ui/CrtOverlay';
 import ImageCarousel from '../../components/ui/ImageCarousel';
+import Footer from '../../components/Footer.astro';
 import '../../styles/global.css';
 
 export async function getStaticPaths() {
@@ -17,11 +18,14 @@ const { project } = Astro.props;
 const { Content } = await render(project);
 
 const tagColors: Record<string, string> = {
-  'WebGL': '#ff0055',
-  'C++': '#0088ff',
-  'GLSL': '#00ffaa',
-  'Three.js': '#ffaa00',
-  'Rust': '#ff5500',
+  'C++': '#ff0055',
+  'C#': '#fff700ff',
+  'Python': '#ff3c00ff',
+  'Unreal Engine': '#0088ff',
+  'Unity': '#00ff04ff',
+  'OpenGL': '#00ffaa',
+  'University': '#ffaa00',
+  'Blueprints': '#ff00e6ff',
   'Math': '#aa00ff',
 };
 const getTagColor = (tag: string) => tagColors[tag] || '#00ffff';
@@ -38,7 +42,7 @@ const getTagColor = (tag: string) => tagColors[tag] || '#00ffff';
     
     
 
-    <main class="relative flex flex-col items-center pt-32 pb-20 px-4 max-w-4xl mx-auto">
+    <main class="relative flex flex-col items-center pt-10 pb-20 px-4 max-w-4xl mx-auto flex-grow">
       
       {/* HEADER SECTION */}
       <div class="w-full flex justify-between items-end mb-4">
@@ -104,8 +108,10 @@ const getTagColor = (tag: string) => tagColors[tag] || '#00ffff';
             muted 
             playsinline
             controls
+            preload="metadata"
+            poster={project.data.image ? (project.data.image.startsWith('/') ? import.meta.env.BASE_URL + project.data.image.slice(1) : project.data.image) : undefined}
           >
-            <source src={project.data.video.startsWith('/') ? import.meta.env.BASE_URL + project.data.video.slice(1) : project.data.video} type="video/mp4" />
+            <source src={encodeURI(project.data.video.startsWith('/') ? import.meta.env.BASE_URL + project.data.video.slice(1) : project.data.video)} type="video/mp4" />
             Il tuo browser non supporta la riproduzione di video.
           </video>
         </div>
@@ -138,7 +144,22 @@ const getTagColor = (tag: string) => tagColors[tag] || '#00ffff';
       
     </main>
 
+    <Footer />
     <CrtOverlay />
+
+    <script>
+      // FIX per Astro View Transitions: i video tendono a bloccarsi durante la navigazione client-side.
+      // Questo script forza il ricaricamento e il play del video non appena la pagina ha finito la transizione.
+      document.addEventListener('astro:page-load', () => {
+        const videos = document.querySelectorAll('video');
+        videos.forEach(video => {
+          video.load();
+          if (video.hasAttribute('autoplay')) {
+            video.play().catch(e => console.warn("L'autoplay è stato bloccato dal browser:", e));
+          }
+        });
+      });
+    </script>
 
     <style is:global>
       /* Stili extra per il contenuto Markdown */

@@ -5,6 +5,7 @@ year: 2025
 tags: ["Unity", "C#", "University"]
 image: "/images/intergalactic_cover.png"
 video: "/videos/Intergalactic_survivor.mp4"
+downloadUrl: "https://drive.google.com/file/d/1WH5PsbLx1hL8ARnrPTzV22lZQwbRinSU/view?usp=sharing"
 order: 6
 ---
 

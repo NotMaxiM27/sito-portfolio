@@ -45,6 +45,7 @@ gallery:
       description: "Visual comparison of of the bunny model and its different Level Of Detail versions using Quadric Error Metrics. LOD3"
     - src: "/images/museum_visualizer/bunny_LOD4_QEM.png"
       description: "Visual comparison of of the bunny model and its different Level Of Detail versions using Quadric Error Metrics. LOD4"
+downloadUrl: "https://drive.google.com/file/d/1ZQkpJIcvaVKjUE36MPS0g53E5AJkC-0I/view?usp=drive_link"
 order: 4
 ---
 
