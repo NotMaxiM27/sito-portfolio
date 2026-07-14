@@ -43,7 +43,7 @@ const getTagColor = (tag: string) => tagColors[tag] || '#00ffff';
       {/* HEADER SECTION */}
       <div class="w-full flex justify-between items-end mb-4">
         <a 
-          href="/" 
+          href={import.meta.env.BASE_URL} 
           class="text-cyan-400 hover:text-cyan-300 pixel-text text-sm transition-colors uppercase animate-pulse"
         >
           &lt; [BACK_TO_ARCHIVE]
@@ -105,7 +105,7 @@ const getTagColor = (tag: string) => tagColors[tag] || '#00ffff';
             playsinline
             controls
           >
-            <source src={project.data.video} type="video/mp4" />
+            <source src={project.data.video.startsWith('/') ? import.meta.env.BASE_URL + project.data.video.slice(1) : project.data.video} type="video/mp4" />
             Il tuo browser non supporta la riproduzione di video.
           </video>
         </div>

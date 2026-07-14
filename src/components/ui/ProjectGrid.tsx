@@ -12,6 +12,15 @@ export interface ProjectGridProps {
   progetti: ProjectData[];
 }
 
+const resolvePath = (path: string) => {
+  if (!path) return path;
+  if (path.startsWith('/')) {
+    const base = import.meta.env.BASE_URL;
+    return base === '/' ? path : base.replace(/\/$/, '') + path;
+  }
+  return path;
+};
+
 const tagColors: Record<string, string> = {
   'C++': '#ff0055',
   'C#': '#ff0055',
@@ -94,7 +103,7 @@ export default function ProjectGrid({ progetti }: ProjectGridProps) {
         <AnimatePresence>
           {progettiFiltrati.map((progetto) => (
             <motion.a
-              href={`/projects/${progetto.id}`}
+              href={resolvePath(`/projects/${progetto.id}`)}
               key={progetto.id}
               layout
               initial={{ opacity: 0, scale: 0.8 }}
@@ -104,7 +113,7 @@ export default function ProjectGrid({ progetti }: ProjectGridProps) {
             >
               <div className="h-48 bg-[#111] relative" style={{ viewTransitionName: `img-${progetto.id}` }}>
                 {progetto.image ? (
-                  <img src={progetto.image} alt={progetto.title} className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" />
+                  <img src={resolvePath(progetto.image)} alt={progetto.title} className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" />
                 ) : (
                   <div className="absolute inset-0 flex items-center justify-center text-gray-600 font-mono text-xs">
                     [NO_SIGNAL_IMG]
